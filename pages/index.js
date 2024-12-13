@@ -1,7 +1,5 @@
 import { useRouter } from 'next/router';
 import FeaturedBookList from "@/components/books";
-import { promises as fs } from 'fs';
-import path from 'path';
 
 export default function Home({featuredBooks = []}) {
   const router = useRouter();
@@ -43,7 +41,8 @@ export default function Home({featuredBooks = []}) {
 
         {/* Featured Books Section */}
         <div className="mt-8">
-          {featuredBooks && <FeaturedBookList books={featuredBooks}/>}
+          {console.log(featuredBooks)}
+          {<FeaturedBookList Books={featuredBooks}/>}
         </div>
 
       </div>
@@ -53,14 +52,12 @@ export default function Home({featuredBooks = []}) {
 
 export async function getStaticProps() {
   try {
-    const filePath = path.join(process.cwd(), 'Data.json');
-    const jsonData = await fs.readFile(filePath, 'utf8');
-    
-    const data = JSON.parse(jsonData);
+    const response = await fetch('http://localhost:3000/api/books');
+    const data = await response.json();
 
     return {
       props: {
-        featuredBooks: data.books || [],
+        featuredBooks: data || [],
         genres: data.genres || [],
       },
     };

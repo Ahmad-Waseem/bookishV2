@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
   const [darkMode, setDarkMode] = useState(false);
+  const { user, logout } = useAuth();
 
   useEffect(() => {
-    if (localStorage.theme === 'dark' || (!localStorage.theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    if (
+      localStorage.theme === 'dark' ||
+      (!localStorage.theme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
       setDarkMode(true);
       document.documentElement.classList.add('dark');
     }
@@ -13,9 +18,7 @@ export default function Navbar() {
 
   const toggleTheme = () => {
     setDarkMode(!darkMode);
-
     document.documentElement.classList.toggle('dark');
-
     localStorage.theme = darkMode ? 'light' : 'dark';
   };
 
@@ -36,20 +39,41 @@ export default function Navbar() {
             <Link href="/authors" className="text-gray-700 dark:text-white">Authors</Link>
           </li>
           <li>
-            <Link href="/info/faqs" className="text-gray-700 dark:text-white">Info</Link>
+            <Link href="/info" className="text-gray-700 dark:text-white">Info</Link>
           </li>
           <li>
             <Link href="/search" className="text-gray-700 dark:text-white">Search Books</Link>
           </li>
         </ul>
-        
-        <button
-          onClick={toggleTheme}
-          className="px-3 py-1 rounded-lg bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-white"
-          aria-label="Toggle theme"
-        >
-          {darkMode ? '☀️' : '🌙'}
-        </button>
+
+        <div className="flex items-center space-x-4">
+          {user ? (
+            <>
+              <span className="text-gray-700 dark:text-white">{user.email}</span>
+              <button
+                onClick={logout}
+                className="px-3 py-1 rounded-lg bg-red-500 text-white"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link
+              href="/login"
+              className="px-3 py-1 rounded-lg bg-blue-500 text-white"
+            >
+              Login
+            </Link>
+          )}
+
+          <button
+            onClick={toggleTheme}
+            className="px-3 py-1 rounded-lg bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-white"
+            aria-label="Toggle theme"
+          >
+            {darkMode ? '☀️' : '🌙'}
+          </button>
+        </div>
       </div>
     </nav>
   );

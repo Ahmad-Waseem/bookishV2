@@ -1,25 +1,46 @@
 import { useState, useEffect } from 'react';
 import SearchResults from './SearchResults';
+import { useAuth } from '@/context/AuthContext';
 
 export default function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
   const [resultTerm, setResultTerm] = useState('');
   const [recentSearches, setRecentSearches] = useState([]);
+  const { user } = useAuth();
 
   useEffect(() => {
-    const storedSearches = JSON.parse(localStorage.getItem('recentSearches')) || [];
-    setRecentSearches(storedSearches);
+    // Fetch recent searches from the API when the component mounts
+    const fetchRecentSearches = async () => {
+      const response = await fetch('http://localhost:3000/api/user', {
+        headers: {
+          'Content-Type': 'application/json',
+          'user-id': user?.userId
+        }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setRecentSearches(data.searchHistory || []);
+      }
+    };
+    fetchRecentSearches();
   }, []);
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (!searchTerm) return;
 
-    // Update recent searches
+
     const updatedSearches = [searchTerm, ...recentSearches.filter((item) => item !== searchTerm)].slice(0, 3);
     setRecentSearches(updatedSearches);
 
-    // Store searches
-    localStorage.setItem('recentSearches', JSON.stringify(updatedSearches));
+
+    await fetch('http://localhost:3000/api/user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'user-id': user?.userId
+      },
+      body: JSON.stringify({ query: searchTerm }), // Send search term to API
+    });
 
     setResultTerm(searchTerm);
     // Clear the search input

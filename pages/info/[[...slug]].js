@@ -1,4 +1,6 @@
+// pages/info/[[...slug]].js
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const InfoPage = () => {
   const router = useRouter();
@@ -8,10 +10,10 @@ const InfoPage = () => {
     return (
       <div>
         <h1>Information Home</h1>
-        <p>Welcome to the Information page! Choose a section:</p>
+        <p>Welcome to the Information page!</p>
         <ul>
-          <li><a href="/info/faqs">FAQs</a></li>
-          <li><a href="/info/support">Support</a></li>
+          <li><Link href="/info/faqs">FAQs</Link></li>
+          <li><Link href="/info/support">Support</Link></li>
         </ul>
       </div>
     );

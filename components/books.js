@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-function FeaturedBookList({ books = [] }) {
-    console.log("sent ones", books)
+function FeaturedBookList({ Books = [] }) {
+    console.log("sent ones", Books)
+    const [books, setLocalBooks] = useState(Books);
+
+    useEffect(() => {
+        setLocalBooks(Books);
+        console.log("sent ones:", Books)
+    }, [Books]);
+
+    if (books.length == 0)
+        return (
+            <div className="container mx-auto px-4 py-4">
+                <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
+                    Loading
+                </h2>
+
+            </div>
+        );
 
     return (
         <div className="container mx-auto px-4 py-4">
@@ -11,13 +27,13 @@ function FeaturedBookList({ books = [] }) {
             </h2>
             <ul className="list-disc space-y-2">
                 {books.map((book) => (
-                    <li 
-                        key={book.id} 
+                    <li
+                        key={book.id}
                         className="p-4 bg-white dark:bg-gray-800 rounded-md shadow-sm 
                                  hover:shadow-md transition-shadow duration-200
                                  border border-gray-200 dark:border-gray-700"
                     >
-                        <Link href={`/books/${book.id}`}>
+                        <Link href={`/books/${book._id}`}>
                             <h3 className="text-xl font-medium mb-2 text-gray-800 dark:text-white">
                                 {book.title}
                             </h3>

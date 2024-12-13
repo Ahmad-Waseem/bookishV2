@@ -1,8 +1,4 @@
 import { useState } from 'react';
-import { getBooks, getGenres } from '@/lib/data';
-import Link from 'next/link';
-import path from 'path';
-import fs from 'fs';
 import BookList from '@/components/bookList';
 
 export default function BooksPage({ books, genres }) {
@@ -86,14 +82,14 @@ export default function BooksPage({ books, genres }) {
 }
 
 export async function getStaticProps() {
-  const dataFilePath = path.join(process.cwd(), 'data.json');
-  const jsonData = fs.readFileSync(dataFilePath, 'utf-8');
-  const data = JSON.parse(jsonData);
 
-  const books = getBooks(data);
-  const genres = getGenres(data);
+  const bookRes = await fetch('http://localhost:3000/api/books');
+  const books = await bookRes.json();
+  const genreRes = await fetch('http://localhost:3000/api/genre');
+  const genres = await genreRes.json();
 
-  if (!books) {
+
+  if (!books || !genres) {
     return { notFound: true };
   }
   return { props: { books, genres }, revalidate: 300 };
