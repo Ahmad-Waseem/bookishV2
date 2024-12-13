@@ -2,7 +2,10 @@
 A NextJs project equipped with principles of MongoDB and Mongoose project, targeting concepts like Client Side Rendering, Server-Side Rendering, Static-Site-Generation, ISR, SWR and more!
 The mini-project is the sleeker version of [Bookish](https://github.com/Ahmad-Waseem/bookish) and includes dynamic and nested Api routing with useEffect, useState and useContext hooks provided by React!
 - ChakraUI has also been implemented, so legacy versions of React .i.e. 18.*.* are preffered
-- add a .env file in root directory with MONGO_URI=mongodb+srv://<username>:<db_password>@<clustername>.vli4l.mongodb.net/?retryWrites=true&w=majority&appName=<clustername>
+- add a .env file in root directory as:
+```bash
+     MONGO_URI=mongodb+srv://<username>:<db_password>@<clustername>.vli4l.mongodb.net/?retryWrites=true&w=majority&appName=<clustername>
+```
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
