@@ -1,5 +1,7 @@
-# Bookish
-A NextJs practice project, targeting concepts like Client Side Rendering, Server-Side Rendering, Static-Site-Generation, ISR, SWR and more!
+# BookishV2
+A NextJs project equipped with principles of MongoDB and Mongoose project, targeting concepts like Client Side Rendering, Server-Side Rendering, Static-Site-Generation, ISR, SWR and more!
+The mini-project is the sleeker version of [Bookish](https://github.com/Ahmad-Waseem/bookish) and includes dynamic and nested Api routing with useEffect, useState and useContext hooks provided by React!
+ChakraUI has also been implemented, so legacy versions of React .i.e. 18.* are preffered
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
